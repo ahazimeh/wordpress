@@ -131,3 +131,60 @@ to give color to the current like
 if(is_page('about-us') or wp_get_post_parent_id(get_the_ID()) == 12 ) //the or condition is for the children pages
 btw you can remove get_the_ID() and replace it by 0 and the function will know that you mean current page
 <li <?php if(is_page('about-us')) echo 'class="current-menu-item"' ?>
+
+
+section 6:
+make /blog page for blog rather than index
+go to settings wp then reading
+Home page takes Home and Posts page takes blog
+now /blog will run the blog page powered by page.php and the root will run the home page powered by index.php
+make a page called front-page.php and this will be the home page
+now the home page will be powered by front-page.php and the blog page will be powered by index.php
+
+the_excerpt() is same as the_content() but shows part of the data
+
+post Author link that takes you to all posts by this author
+the_author_posts_link();
+to change the name displayed then change the nickname in the Users -> Profile
+
+date of post
+the_time();
+
+category of the post
+get_the_category_list(', ')//the parameter seperator between multiple categories
+
+pagination for pages
+echo paginate_links();
+
+make archive.php for blog posts that belong to a user or category
+
+is_category() and is_author() returns true if we are in category or author archive respectively
+single_cat_title() and the_author() to get the category or author we are viewing posts for
+or you can use the_archive_title(); for everything
+
+Biographical info is the description for author archive
+the_archive_description(); to view it
+
+
+whenever you want to use custom queries call WP_Query()
+$homepagePosts = new WP_Query(array(
+              'post_type' =>'post',//you can say page
+              'posts_per_page' => 2,
+            //   'category_name' => 'awards'
+            // 'author_name' =>'Ali'
+          ));
+            while($homepagePosts->have_posts()){
+                $homepagePosts->the_post();?>
+                <li><?php the_title(); ?></li>
+                <?php
+            }
+
+give it a text and in the 2nd parameter nb of words
+wp_trim_words(get_the_content(),18)
+
+
+after you make a custom query and use it in a while look user after }
+wp_reset_postdata(); to clean up after running custom query, this will reset different wp data in global variables back to the state it was in before we make a custom query
+
+
+if(get_post_type() =='post') //wp comes with posts and pages, page is a post that has a post type = page
