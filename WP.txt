@@ -51,3 +51,83 @@ wp_enqueue_style means right before you output this line of code load university
 
 
 Section 5:
+
+
+to allow wp to set a title for every page use
+function university_features(){
+    add_theme_support('title-tag');// to enable a feature for the theme
+}
+add_action('after_setup_theme','university_features');
+
+for links we use site_url which automatically gives you the root directory of your website
+href="<?php echo site_url('/?page_id=12') ?>"
+
+
+
+to get the current/parent page ids//it 
+$the_parent = wp_get_post_parent_id(get_the_ID());
+//the parent will give 0 if there is no parent
+to get the permalink of a certain page
+echo get_permalink($the_parent)
+
+if a wp function begins with get the it will give you a value and not echo anything for you
+if a fn begins with the word the then wp will handle echoing and outputing on to the page
+the_title()     get_the_title()
+the_ID()     get_the_ID()
+
+to look for wp functions
+https://codex.wordpress.org/
+https://developer.wordpress.org/
+
+view all pages with current and children pages
+wp_list_pages();
+
+
+
+if($the_parent){
+              $findChildrenOf = $the_parent;
+          }
+          else{
+              $findChildrenOf = get_the_ID();
+          }
+wp_list_pages(array(
+              'title_li' => NULL,//to remove the title
+              'child_of' => $findChildrenOf,//give it the parent ID you want to view its children
+              'sort_column' => 'menu_order'//to sort pages depending on the order of the page rather than the alphabatic order
+          ));
+
+
+
+check if a page is a parent
+$testArray = get_pages(array(
+        'child_of' =>get_the_ID()
+));
+note: get_pages is similar to wp_list_pages but the first 1 doesn't echo data for you
+
+for responsive add this in the header
+<meta name="viewport" content="width=device-width, intial-scale=1">
+
+to display languages for search engines
+<html <?php language_attributes(); ?>>
+
+to tell web browser what kind of characters, letters, and numbers you are going to be using on the page(this depends on the language of the website)
+<meta charset="<?php bloginfo('charset') ?>"> //it looks on the language setting and few diff options
+
+this give the body tag some usefull classes
+<body <?php body_class(); ?>>
+
+
+to make the menu dynamic
+go to the function.php and add this function
+register_nav_menu('headerMenuLocation', 'header Menu Location');// it should be called on during after_setup_theme hook or event
+and in the page.php
+<?php
+wp_nav_menu(array(
+    'theme_location' =>'headerMenuLocation'
+    ));
+    ?>
+
+to give color to the current like
+if(is_page('about-us') or wp_get_post_parent_id(get_the_ID()) == 12 ) //the or condition is for the children pages
+btw you can remove get_the_ID() and replace it by 0 and the function will know that you mean current page
+<li <?php if(is_page('about-us')) echo 'class="current-menu-item"' ?>
