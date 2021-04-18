@@ -1,0 +1,53 @@
+//to view the data in settings
+<?php
+    bloginfo('name');
+    ?>
+<p><?php bloginfo('description'); ?></p>
+
+style.css
+/*
+Theme Name: Fictional University
+Author: Ali
+Version: 1.0
+*/
+to set an image for the theme then add an screenshot.png in the theme folder
+
+
+//to loop on posts and pages
+<?php
+    while(have_posts()){
+        the_post();?>
+        <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+        <?php the_content(); ?>
+        <hr>
+        <?php
+    }
+?>
+//to loop on a single page use same code in single.php same code as above
+//to loop on a single page use same code in page.php
+//if these 2 pages above doesn't exist then by default wp will use index.php
+
+//for header and footer
+make files called header.php and footer.php
+and call get_header() and get_footer() respectively
+call wp_head() in the head section to load css and js files
+//to start the path from the theme path use
+<?php echo get_theme_file_uri("/images/library-hero.jpg") ?>
+
+in the functions.php:
+function university_files() {
+//loading js file requires 5 arguments, first 2 are same as the css file
+//3rd arg to include dependencies(NULL if no dependencies)
+//4th arg is for version number
+//5th argument is whether we want to load the file right before the closing body tag(true for yes so it loads it there instead of head section)
+
+    wp_enqueue_style('university_main_styles',get_stylesheet_uri()); //to load styles.css use get_stylesheet_uri()
+}
+call add_action('wp_enqueue_scripts','university_files') in the fuctions.php page to load css and js files
+note: wp_enqueue_style to load css and wp_enqueue_script to load js
+wp_enqueue_style means right before you output this line of code load university_files
+
+
+
+
+Section 5:
