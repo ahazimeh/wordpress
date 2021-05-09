@@ -4,16 +4,18 @@ get_header();
 <div class="page-banner">
     <div class="page-banner__bg-image" style="background-image: url(<?php echo get_theme_file_uri('images/ocean.jpg')?>);"></div>
     <div class="page-banner__content container container--narrow">
-        <h1 class="page-banner__title"><?php if(is_category()){
-            echo 'Posts by ';single_cat_title();
+        <h1 class="page-banner__title">
+        <?php if(is_category()){
+            // echo 'Posts by ';single_cat_title();
             
         }
-        else if(is_author()){
-            echo 'Posts by ';the_author();
+        // else if(is_author()){
+        //     echo 'Posts by ';the_author();
 
-        }
-        // the_archive_title();
-        ?></h1>
+        // }
+        the_archive_title();
+        ?>
+        </h1>
         <div class="page-banner__intro">
             <p><?php the_archive_description(); ?></p>
         </div>
